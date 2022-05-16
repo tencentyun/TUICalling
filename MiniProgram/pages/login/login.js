@@ -31,6 +31,7 @@ Page({
         icon: 'error',
       })
     } else {
+      getApp().aegisReportEvent('onLogin', 'onLogin-success')
       wx.$globalData.userID = this.data.userID
       wx.switchTab({
         url: '../index/index',
