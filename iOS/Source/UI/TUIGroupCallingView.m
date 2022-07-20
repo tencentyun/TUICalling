@@ -131,7 +131,7 @@
     [self addSubview:self.closeCameraBtn];
     [self addSubview:self.hangupBtn];
     [self addSubview:self.switchCameraBtn];
-    // 视图约束
+    
     [self.groupCollectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(StatusBar_Height + 38);
         make.centerX.equalTo(self);
@@ -274,17 +274,44 @@
     if (!user) return;
     
     NSInteger index = [self getIndexForUser:user];
-    if (index < 0) return;
+    BOOL isNewComingUser = (index<0);
+    
+    if (index < 0) {
+        [self.userList addObject:user];
+        index = self.userList.count - 1;
+        
+    } else {
+        self.userList[index] = user;
+    }
     
     self.curCallingState = TUICallingStateCalling;
     user.isEnter = YES;
-    self.userList[index] = user;
+    
     [self.delegateManager reloadCallingGroupWithModel:self.userList];
-    [self.delegateManager reloadGroupCellWithIndex:index];
+    
+    if (isNewComingUser) {
+        [self.delegateManager.collectionView reloadData];
+        
+    } else {
+        [self.delegateManager reloadGroupCellWithIndex:index];
+    }
     
     if (self.isVideo) {
-        UIView *renderView = [self.delegateManager getRenderViewFromUser:user.userId];
+        [self renderRemoteUser:user tryout:5];
+    }
+}
+
+- (void)renderRemoteUser:(CallUserModel*)user tryout:(NSInteger)times {
+    UIView *renderView = [self.delegateManager getRenderViewFromUser:user.userId];
+    
+    if (renderView) {
         [[TRTCCalling shareInstance] startRemoteView:user.userId view:renderView];
+        
+    } else if (times > 0) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,(int64_t)300*NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            
+            [self renderRemoteUser:user tryout:times-1];
+        });
     }
 }
 
@@ -359,7 +386,13 @@
     
     UIView *localRenderView = [self.delegateManager getRenderViewFromUser:self.currentUser.userId];
     
-    if (!self.isCloseCamera && localRenderView != nil) {
+    if (!localRenderView) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(300 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+            [self handleLocalRenderView];
+        });
+        return;
+    }
+    if (!self.isCloseCamera) {
         [[TRTCCalling shareInstance] openCamera:self.isFrontCamera view:localRenderView];
     }
     
@@ -599,5 +632,6 @@
     }
     return _calleeCollectionView;
 }
+
 
 @end
