@@ -1,0 +1,30 @@
+{
+    "tpns": {
+        "access_id": "",
+        "access_key": ""
+    },
+    "com.tencent.trtc": {
+        "channel": {
+            "enable": true,
+            "xiaomi": {
+                "app_id": "",
+                "app_key": ""
+            },
+            "vivo": {
+                "app_id": "",
+                "app_key": ""
+            },
+            "oppo": {
+                "app_id": "",
+                "app_key": ""
+            },
+            "meizu": {
+                "app_id": "",
+                "app_key": ""
+            }
+        }
+    },
+    "debug": false,
+    "version": "1.3.2.1-release",
+    "upgrade": false
+}

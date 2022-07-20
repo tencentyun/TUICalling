@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
-// TUIOfflinePush: delete it without Google(FCM) or Huawei offline push function
-apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.huawei.agconnect'
+apply plugin: "com.tencent.android.tpns"
 
 android {
     compileSdkVersion 28
@@ -14,23 +12,16 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         multiDexEnabled true
+        //tpns接入添加
         ndk {
             //可以根据需要来自行选择并添加对应cpu类型的.so库。
             abiFilters 'armeabi-v7a', 'arm64-v8a'
         }
-
-        /*
-        * TUIOfflinePush : you should configure vivo application information, otherwise the compilation fails.
-        *  delete it without the offline push function.
-        *
-        *  "VIVO_APPKEY" : ViVo application AppKey registered in the ViVo platform.
-        *  "VIVO_APPID" : ViVo application AppId registered in the ViVo platform.
-        */
         manifestPlaceholders = [
-                "VIVO_APPKEY": "",
-                "VIVO_APPID" : ""
+                // TPNS 推送服务 accessId、accessKey
+                XG_ACCESS_ID : "",
+                XG_ACCESS_KEY: ""
         ]
-
     }
 
     buildTypes {
@@ -44,7 +35,7 @@ android {
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api project(":tuicalling")
-    api project(':debug')
-    api project(':tuiofflinepush')
+    // TPNS SDK 主工程依赖包
+    implementation 'com.tencent.tpns:tpns:1.3.2.1-release'
     implementation "androidx.recyclerview:recyclerview:1.0.0"
 }

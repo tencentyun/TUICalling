@@ -199,7 +199,7 @@ public class TRTCVideoLayoutManager extends RelativeLayout {
                 return true;
             }
         });
-        layout.getVideoView().setOnTouchListener(new OnTouchListener() {
+        layout.setOnTouchListener(new OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return detector.onTouchEvent(event);

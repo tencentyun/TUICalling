@@ -1,4 +1,3 @@
 include ':app'
 include ':tuicalling'
 include ':debug'
-include ':tuiofflinepush'

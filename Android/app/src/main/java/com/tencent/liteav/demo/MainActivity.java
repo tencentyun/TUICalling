@@ -29,6 +29,7 @@ import com.tencent.imsdk.v2.V2TIMSDKListener;
 import com.tencent.liteav.basic.UserModel;
 import com.tencent.liteav.basic.UserModelManager;
 import com.tencent.liteav.debug.GenerateTestUserSig;
+import com.tencent.liteav.demo.tpnspush.TPNSPushSetting;
 import com.tencent.liteav.trtccalling.TUICallingImpl;
 import com.tencent.qcloud.tuicore.TUILogin;
 
@@ -110,8 +111,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "login onSuccess");
+                //注册TPNS
+                registerTPNSPush();
             }
         });
+    }
+
+    //进入主界面,登录成功后注册,注册TPNS离线推送服务;
+    //退出或注销登录时,需要进行反注册
+    private void registerTPNSPush() {
+        TPNSPushSetting.getInstance().init();
+        TPNSPushSetting.getInstance().bindUserID(TUILogin.getUserId());
+    }
+
+    //反注册TPNS服务
+    private void unregisterTPNSPush() {
+        TPNSPushSetting.getInstance().unBindUserID(TUILogin.getUserId());
+        TPNSPushSetting.getInstance().unInit();
     }
 
     private void initView() {
@@ -194,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logout();
+                unregisterTPNSPush();
                 startLoginActivity();
             }
         });

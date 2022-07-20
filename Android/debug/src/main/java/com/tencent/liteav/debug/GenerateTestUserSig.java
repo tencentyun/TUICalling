@@ -47,6 +47,7 @@ public class GenerateTestUserSig {
      */
     public static final int SDKAPPID = PLACEHOLDER;
 
+
     /**
      * Signature validity period, which should not be set too short
      * <p>
@@ -54,6 +55,14 @@ public class GenerateTestUserSig {
      * Default value: 604800 (seven days)
      */
     private static final int EXPIRETIME = 604800;
+
+    /**
+     * Sends request for the pull/push address from the backend
+     * <p>
+     * key: url_push         Gets the RTMP push address
+     * key: url_play_flv     Gets the FLV playback address
+     */
+    public static final String URL_FETCH_PUSH_URL = "PLACEHOLDER";
 
     /**
      * Follow the steps below to obtain the key required for UserSig calculation.

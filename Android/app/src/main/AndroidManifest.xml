@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.tencent.liteav.demo">
 
+    <!-- tpns离线推送权限设置 start -->
+    <!-- 【必须】 移动推送 TPNS SDK VIP版本所需权限 -->
+    <uses-permission android:name="com.tencent.liteav.demo.permission.XGPUSH_RECEIVE" />
+    <!-- 【必须】 移动推送 TPNS SDK 所需权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 【常用】 移动推送 TPNS SDK所需权限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <!-- tpns离线推送权限设置 end -->
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="false"
@@ -58,6 +71,40 @@
             android:name=".TUICallingEntranceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <!-- tpns离线推送配置 start -->
+        <receiver android:name="com.tencent.liteav.demo.tpnspush.TPNSMessageReceiver">
+            <intent-filter>
+                <!-- 接收消息透传 -->
+                <action android:name="com.tencent.android.xg.vip.action.PUSH_MESSAGE" />
+                <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
+                <action android:name="com.tencent.android.xg.vip.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 配置首次安装启动 app 时，不自动启动推送服务；用于隐私合规场景 -->
+        <meta-data
+            android:name="XG_SERVICE_PULL_UP_OFF"
+            android:value="true" />
+
+        <!-- 兼容 Android P，需要添加使用 Apache HTTP client 库-->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <!--如果您的应用服务接入点为广州，SDK 默认实现该配置。
+           如果您的应用服务接入点为上海、新加坡或中国香港，请按照下文步骤完成其他服务接入点域名配置
+
+           其他服务接入点域名如下：
+              上海：tpns.sh.tencent.com
+              新加坡：tpns.sgp.tencent.com
+              中国香港：tpns.hk.tencent.com
+       -->
+        <meta-data
+            android:name="XG_SERVER_SUFFIX"
+            android:value="tpns.sh.tencent.com" />
+        <!-- tpns离线推送配置 end -->
+
     </application>
 
 </manifest>

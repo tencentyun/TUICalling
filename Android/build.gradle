@@ -6,19 +6,14 @@ buildscript {
         jcenter()
         google()
         mavenCentral()
-        // TUIOfflinePush : configure HMS Core SDK Maven address, delete it without the Huawei offline push function.
         maven { url 'https://developer.huawei.com/repo/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath "com.tencent.android.tpns:tpnsplugin:1.8.0"
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-
-        // TUIOfflinePush: Huawei, delete it without Huawei offline push function
-        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
-
-        // TUIOfflinePush : Google(FCM), delete it without Google offline push function
-        classpath 'com.google.gms:google-services:4.3.10'
     }
 }
 
@@ -30,7 +25,6 @@ allprojects {
         jcenter()
         google()
         mavenCentral()
-        // TUIOfflinePush : delete it without the Huawei offline push function.
         maven { url 'https://developer.huawei.com/repo/' }
     }
 }

@@ -5,7 +5,10 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.text.TextUtils;
 
+
 public class RTCubeUtils {
+    private static final String RTCUBE_PACKAGE_NAME = "com.tencent.trtc";
+
     public static String getApplicationName(Context context) {
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo;
@@ -17,5 +20,9 @@ public class RTCubeUtils {
         }
         String applicationName = (String) packageManager.getApplicationLabel(applicationInfo);
         return TextUtils.isEmpty(applicationName) ? "" : applicationName;
+    }
+
+    public static boolean isRTCubeApp(Context context) {
+        return RTCUBE_PACKAGE_NAME.equals(context.getPackageName());
     }
 }

@@ -149,6 +149,7 @@ public class FloatCallView extends BaseTUICallView {
             TRTCLogger.d(TAG, "video renderView is empty");
             return;
         }
+
         TextureView mTextureView = renderView.getVideoView();
         if (null == mTextureView) {
             return;

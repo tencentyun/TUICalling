@@ -61,7 +61,7 @@ public class UserModelManager {
         try {
             SPUtils.getInstance(PER_DATA).put(PER_USER_MODEL, "");
         } catch (Exception e) {
-            Log.e(TAG, "clear user model error:" + e.getMessage());
+            Log.d(TAG, "clea user model error:" + e.getMessage());
         }
     }
 

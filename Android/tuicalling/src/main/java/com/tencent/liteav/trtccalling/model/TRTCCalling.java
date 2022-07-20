@@ -951,11 +951,15 @@ public class TRTCCalling {
             }
             //作为被叫,当房间中人数为0时退出房间,一般情况下 C2C多人通话在这里处理退房
             if (mIsBeingCalled && mRemoteUserInTRTCRoom.size() == 0) {
-                playHangupMusic();
-                exitRoom();
-                stopCall();
-                if (mTRTCInternalListenerManager != null) {
-                    mTRTCInternalListenerManager.onCallEnd();
+                if (mCurInvitedList.size() == 0) {
+                    preExitRoom(userId);
+                } else {
+                    playHangupMusic();
+                    exitRoom();
+                    stopCall();
+                    if (mTRTCInternalListenerManager != null) {
+                        mTRTCInternalListenerManager.onCallEnd();
+                    }
                 }
                 return;
             }
