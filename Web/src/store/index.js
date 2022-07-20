@@ -51,8 +51,8 @@ function createStore () {
       },
       dissolveMeeting (state) {
         state.meetingUserIdList = [];
-        state.isMuteVideoUserIdList = [];
-        state.isMuteAudioUserIdList = [];
+        state.muteVideoUserIdList = [];
+        state.muteAudioUserIdList = [];
       },
       updateMuteVideoUserIdList (state, userIdList) {
         state.muteVideoUserIdList = userIdList;
