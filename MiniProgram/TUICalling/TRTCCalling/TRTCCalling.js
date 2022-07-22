@@ -989,7 +989,7 @@ class TRTCCalling {
       // this.TRTCCallingDelegate.onCallEnd({ message: cancelRes[0].data.message });
     }
     // this.exitRoom();
-    this._reset();
+    this._reset(this.data.chatTimeNum);
     return cancelRes;
   }
 
