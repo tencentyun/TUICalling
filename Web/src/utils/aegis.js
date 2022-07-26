@@ -13,7 +13,7 @@ export function aegisReportEvent(name, ext1) {
         aegis.reportEvent({
             name,
             ext1,
-            ext2: 'TRTCCallingExternal',
+            ext2: 'webTUICallingExternal',
             ext3: genTestUserSig('').sdkAppID,
         });
         if(typeof aegisReportEvent[name] !== 'object') {

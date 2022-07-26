@@ -29,12 +29,12 @@ export default {
   },
   methods: {
     goto: function(path) {
-      this.$router.push(path);
       if (path.indexOf("video") !== -1) {
           aegisReportEvent("chooseSence", "VideoCall");
       } else if (path.indexOf("audio") !== -1) {
           aegisReportEvent("chooseSence", "VoiceCall");
       }
+      this.$router.push(path);
     }
   }
 };
