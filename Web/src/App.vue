@@ -66,9 +66,10 @@ export default {
   },
   mounted() {
     aegisReportEvent("mounted", "mounted-success");
-    if (!this.handleIPRequest(document.URL)) {
-      this.$message.warning("Please request with localhost or 127.0.0.1 !");
-    }
+    let urlStr = document.URL;
+    if (urlStr.indexOf("localhost") === -1 && urlStr.indexOf("https") === -1) { 
+      this.$message.warning("Please use localhost locally, and use https protocol for online deployment connections ！");
+    } 
   },
   destroyed() {
     this.removeListener();
@@ -108,17 +109,6 @@ export default {
       this.$trtcCalling.off(this.TrtcCalling.EVENT.USER_AUDIO_AVAILABLE, this.handleUserAudioChange);
     },
     handleError: function() {},
-    handleIPRequest: function(urlStr) {
-      let flag = true;
-      if (urlStr.indexOf("localhost") !== -1) {
-        flag = true;
-      } else if (urlStr.indexOf("127") !== -1) {
-        flag = true;
-      } else {
-        flag = false;
-      }
-      return flag;
-    },
     handleNewInvitationReceived: async function(payload) {
       const { inviteID, sponsor, inviteData } = payload;
       log(`handleNewInvitationReceived ${JSON.stringify(payload)}`);
