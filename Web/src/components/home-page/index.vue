@@ -12,6 +12,7 @@
 
 <script>
 import { mapState } from "vuex";
+import {aegisReportEvent} from '../../utils/aegis'
 
 export default {
   name: "HomePage",
@@ -23,8 +24,16 @@ export default {
       enableEditName: true
     };
   },
+  mounted() {
+    aegisReportEvent("login", "login-success");
+  },
   methods: {
     goto: function(path) {
+      if (path.indexOf("video") !== -1) {
+          aegisReportEvent("chooseSence", "VideoCall");
+      } else if (path.indexOf("audio") !== -1) {
+          aegisReportEvent("chooseSence", "VoiceCall");
+      }
       this.$router.push(path);
     }
   }
